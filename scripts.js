@@ -6,9 +6,9 @@ var answeredWrong = [];
 var score = 0;
 let answeredRightList = '';
 var answeredWrongList = '';
-//Generates random number between 0 and array.length
+let question = document.getElementById('playerQuestion');
+let answer = document.getElementById('playerAnswer');
 let qi = Math.floor(Math.random() * parseInt(quizQueue.length));
-// let question = document.getElementById('question');
 
 //Alert function greeting user 1 on page load and explaining the game.
 
@@ -30,37 +30,33 @@ document.getElementById("Finished").addEventListener('click', () => {
     document.getElementById('initial').style.display = 'none';
     document.getElementById('answer').style.display = 'flex';
     alert("PLAYER_1 has created a quiz for you! Are you ready? Click 'Ok' to start!");
-    while (quizQueue.length > 0) {
-//Asks question at index location of random number
-//Checks answer to supplied answer and responds if correct or wrong
-//Removes question from array and places it in new array (var answeredRight or var answeredWrong)
-//Updates score
+    question.innerHTML = quizQueue[qi][0];
+});
 
-        //This section does is with prompt boxes
-
-        let question = prompt(quizQueue[qi][0]);
-        // let qi = Math.floor(Math.random() * parseInt(quizQueue.length));
-        if(question == quizQueue[qi][1]) {
-            answeredRight.push([quizQueue[qi][0], quizQueue[qi][1]]);
-            score += 2;
-        } else {
-            answeredWrong.push([quizQueue[qi][0], quizQueue[qi][1]]);
-            //Displays correct answer is given answer was wrong
-            alert('Sorry, the correct answer was ' + quizQueue[qi][1] + '.');
-            score = score - 1;
-        }
-
-
-
+document.getElementById('playerButton').addEventListener('click', () => {
+    if(answer.value.toLowerCase() == (quizQueue[qi][1]).toLowerCase()) {
+        answer.value = '';
+        answeredRight.push([quizQueue[qi][0], quizQueue[qi][1]]);
+        score += 2;
         quizQueue.splice(qi,1);
-        postResults();
+        endCheck();
+    } else {
+        answeredWrong.push([quizQueue[qi][0], quizQueue[qi][1]]);
+        answer.value = '';
+        //Displays correct answer is given answer was wrong
+        alert('Sorry, the correct answer was ' + quizQueue[qi][1] + '.');
+        score = score - 1;
+        quizQueue.splice(qi,1);
+        endCheck();
     }
+    question.innerHTML = quizQueue[qi][0];
 });
 
 //When array var quizQueue is empty, display results:
     //total score
 function postResults() {
     //Posts final score
+    document.getElementById('results').style.display = 'flex';
     document.getElementById('score').innerHTML = '<h2>Your final score is: ' + score + '.</h2><p>You got 2 points for each right answer and lost a point for each wrong answer.</p>'
     //Output correctly answered questions and answers
     if(quizQueue.length == 0 && (answeredRight.length > 0 || answeredWrong.length > 0)) {
@@ -79,4 +75,10 @@ function postResults() {
     document.getElementById('wrong').innerHTML = '<h2>You got the following questions wrong:</h2><ul>' + answeredWrongList + '</ul>';
     };
 }
-    //button to reload page to "Play again"
+
+function endCheck() {
+    if (quizQueue.length == 0) {
+        document.getElementById('answer').style.display = 'none';
+        postResults();
+    }
+}
