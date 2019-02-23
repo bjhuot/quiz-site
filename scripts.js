@@ -8,7 +8,7 @@ let answeredRightList = '';
 var answeredWrongList = '';
 let question = document.getElementById('playerQuestion');
 let answer = document.getElementById('playerAnswer');
-let qi = Math.floor(Math.random() * parseInt(quizQueue.length));
+var qi;
 
 //Alert function greeting user 1 on page load and explaining the game.
 
@@ -27,6 +27,7 @@ function quizQueueAdd() {
 //Listener on finished button that display series of alerts:
 //Explaining rules of game to user 2
 document.getElementById("Finished").addEventListener('click', () => {
+    qi = Math.floor(Math.random() * quizQueue.length);
     document.getElementById('initial').style.display = 'none';
     document.getElementById('answer').style.display = 'flex';
     alert("PLAYER_1 has created a quiz for you! Are you ready? Click 'Ok' to start!");
@@ -40,6 +41,7 @@ document.getElementById('playerButton').addEventListener('click', () => {
         score += 2;
         quizQueue.splice(qi,1);
         endCheck();
+        qi = Math.floor(Math.random() * quizQueue.length);
     } else {
         answeredWrong.push([quizQueue[qi][0], quizQueue[qi][1]]);
         answer.value = '';
@@ -48,6 +50,7 @@ document.getElementById('playerButton').addEventListener('click', () => {
         score = score - 1;
         quizQueue.splice(qi,1);
         endCheck();
+        qi = Math.floor(Math.random() * quizQueue.length);
     }
     question.innerHTML = quizQueue[qi][0];
 });

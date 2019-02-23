@@ -14,11 +14,10 @@
     </header>
     <div id="initial" class="wrapper">
         <form class="quiz">
-            <label>Ask your question here:<input type="text" id="quizQuestion" /></label><br />
-            <label>Answer your question here:<input type="text" id="quizAnswer" /></label><br />
-            <button type="button" onclick="quizQueueAdd()">Submit</button> <button type="reset">Clear</button><br />
+            <input type="text" id="quizQuestion" placeholder="Question" /><br />
+            <input type="text" id="quizAnswer" placeholder="Answer"/><br />
+            <button type="button" id="submit" onclick="quizQueueAdd()">Submit</button> <button id="clear" type="clear">Clear</button><button type="button" id="Finished">Finished</button>
         </form>
-        <button id="Finished">Finished</button>
     </div>
     <div id="answer" class="answer">
         <form class="answer">
